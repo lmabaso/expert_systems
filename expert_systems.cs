@@ -85,6 +85,22 @@ namespace Expert_systems
                             instance.Add(x);
                     }
                 }
+                // else
+                // {
+                //     if (factSgn[x][factSgn[x].Length - 2] == '>')
+                //     {
+                //         if (isNegate == true)
+                //         {
+                //             if (factVar[x][factSgn[x].Length - 1] == toFind)
+                //             instance.Add(x);
+                //         }
+                //         else
+                //         {
+                //             if (factVar[x][factSgn[x].Length - 1] == toFind)
+                //             instance.Add(x);
+                //         }
+                //     }
+                // }        
             } 
             return instance;
         }
@@ -151,7 +167,6 @@ namespace Expert_systems
 
         static bool Ft_backwardChain(char qry, List<string> factVar, List<string> factSgn, ref List<bool> stats, List<char> vars)
         {
-            bool ans = false;
             char toFind;
             string currentTree = null;
             string currentsigns = null;
@@ -169,7 +184,7 @@ namespace Expert_systems
                 currentsigns = factSgn[element];
                 for (int x = 0; x < currentTree.Length - 1; x++)
                 {
-                    Console.WriteLine("{0}---{1}", stats[Ft_varPos(vars, currentTree[x])], vars[Ft_varPos(vars, currentTree[x])]);
+                    // Console.WriteLine("{0}---{1}", stats[Ft_varPos(vars, currentTree[x])], vars[Ft_varPos(vars, currentTree[x])]);
                     stats[Ft_varPos(vars, currentTree[x])] = Ft_backwardChain(currentTree[x], factVar, factSgn, ref stats, vars);
                     tmpBool.Add(stats[Ft_varPos(vars, currentTree[x])]);
                     tmpChr.Add(currentTree[x]);
@@ -185,6 +200,35 @@ namespace Expert_systems
         
          static void Ft_calc(List<char> var, List<string> factVar, List<string> factSgn, ref List<bool> stats, string qry)
          {
+            string tmpVar = null;
+            string tmpSgn = null;
+
+            int Count = 1;
+            for (int x = 0; x < factSgn.Count; x++)
+            {
+                Count = 1;
+                for (int y = factSgn[x].Length; y > 0; y--)
+                {
+                    if (factSgn[x][factSgn[x].Length - Count] == '>')
+                        break;
+                    Count++;
+                }
+                if (Count >= 2)
+                {
+                    for (int y = 0; y < Count; y++)
+                    {
+                        tmpVar = factVar[x].Substring(0 ,factVar[x].Length - Count);
+                        tmpVar += new string(factVar[x][tmpVar.Length + y], 1);
+                        for (int z = 0; z < Count; z++)
+                            tmpSgn = factSgn[x].Substring(0, factSgn[x].Length - (z));
+                        // Console.WriteLine("{0} {1}", tmpVar, tmpSgn);
+                        factVar.Add(tmpVar);
+                        factSgn.Add(tmpSgn);
+                    }
+                    factVar.Remove(factVar[x]);
+                    factSgn.Remove(factSgn[x]);
+                }
+            }
             foreach (char element in qry)
             {
                 stats[Ft_varPos(var, element)] = Ft_backwardChain(element, factVar,factSgn, ref stats, var);
