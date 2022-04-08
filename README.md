@@ -10,19 +10,29 @@ Run `Makefile`
 
 Usage
 -----
-`python3 expert_system.py [-h] [-q] [-i] file`
+`mono expert_system.cs [-h] [-q] [-i] file`
 * -h: Show help message and exit
 * -q: Remove all output except result
 * -i: Enable interative mode
 
 ### Example
 ```
-> python3 expert_system.py tests/basic/basic
-A + B => C
+A | B + C => E
+(F | G) + H => E
 
-=AB
-?C
-C:True
+?E
+
+#=A #, E should be true.
+#=B #, E should be false.
+#=C #, E should be false.
+#=AC #, E should be true.
+#=BC #, E should be true.
+
+#=F #, E should be false.
+#=G #, E should be false.
+#=H #, E should be false.
+#=FH #, E should be true.
+=GH #, E should be true.
 ```
 
 ##### Project done in 2018
