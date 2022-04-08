@@ -6,7 +6,7 @@ About
 
 Installation
 ------------
-Run `make install`
+Run `Makefile`
 
 Usage
 -----
