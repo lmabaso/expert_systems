@@ -4,8 +4,6 @@ About
 -----
 >This project requires us to create an expert system for calculating proposals, in other words a program that can reason about a set of rules and initial facts in order to deduce certain other facts.
 
-This is the second project of the Advanced Algorithms branch at School 42 Paris
-
 Installation
 ------------
 Run `make install`
